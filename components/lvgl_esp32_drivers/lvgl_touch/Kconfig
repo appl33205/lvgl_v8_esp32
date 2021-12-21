@@ -63,23 +63,6 @@ menu "LVGL Touch controller"
             Touch controller uses same interface/device as display
 	    (Note: Display must be initialized before touch)
 
-    choice
-        prompt "Touch Controller SPI Bus."
-        depends on LV_TOUCH_DRIVER_PROTOCOL_SPI
-
-        default LV_TOUCH_CONTROLLER_SPI_VSPI if !IDF_TARGET_ESP32S2
-        default LV_TOUCH_CONTROLLER_SPI_FSPI if IDF_TARGET_ESP32S2
-        help
-            Select the SPI Bus the TFT Display is attached to.
-
-        config LV_TOUCH_CONTROLLER_SPI_HSPI
-            bool "HSPI"
-        config LV_TOUCH_CONTROLLER_SPI_VSPI
-            bool "VSPI" if !IDF_TARGET_ESP32S2
-        config LV_TOUCH_CONTROLLER_SPI_FSPI
-            bool "FSPI" if IDF_TARGET_ESP32S2
-        endchoice
-
     menu "Touchpanel (XPT2046) Pin Assignments"
         depends on LV_TOUCH_CONTROLLER_XPT2046
 
@@ -88,6 +71,7 @@ menu "LVGL Touch controller"
             prompt "GPIO for MISO (Master In Slave Out)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
             
             default 35 if LV_PREDEFINED_PINS_38V1
@@ -100,6 +84,7 @@ menu "LVGL Touch controller"
             prompt "GPIO for MOSI (Master Out Slave In)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
 
             default 32 if LV_PREDEFINED_PINS_38V1
@@ -111,6 +96,7 @@ menu "LVGL Touch controller"
             int "GPIO for CLK (SCK / Serial Clock)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
             
             default 26 if LV_PREDEFINED_PINS_38V1
@@ -122,6 +108,7 @@ menu "LVGL Touch controller"
             int "GPIO for CS (Slave Select)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
 
             default 33 if LV_PREDEFINED_PINS_38V1
             default 5
@@ -132,6 +119,7 @@ menu "LVGL Touch controller"
             int "GPIO for IRQ (Interrupt Request)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
 	    
             default 27 if LV_PREDEFINED_PINS_38V4
@@ -225,6 +213,7 @@ menu "LVGL Touch controller"
             prompt "GPIO for MISO (Master In Slave Out)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
             
             default 35 if LV_PREDEFINED_PINS_38V1
@@ -240,6 +229,7 @@ menu "LVGL Touch controller"
             prompt "GPIO for MOSI (Master Out Slave In)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
 
             default 32 if LV_PREDEFINED_PINS_38V1
@@ -253,6 +243,7 @@ menu "LVGL Touch controller"
             int "GPIO for CLK (SCK / Serial Clock)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
 
             default 26 if LV_PREDEFINED_PINS_38V1
@@ -265,6 +256,7 @@ menu "LVGL Touch controller"
             int "GPIO for CS (Slave Select)"
             range 0 39 if IDF_TARGET_ESP32
             range 0 46 if IDF_TARGET_ESP32S2
+            range 0 46 if IDF_TARGET_ESP32S3
             range 0 21 if IDF_TARGET_ESP32C3
             
             default 33 if LV_PREDEFINED_PINS_38V1

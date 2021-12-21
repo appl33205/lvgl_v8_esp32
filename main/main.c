@@ -16,6 +16,7 @@
 #include "lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.h"
 #include "lvgl_helpers.h"
 #include "esp_freertos_hooks.h"
+
 static void lv_tick_task(void *arg)
 {
    (void)arg;
@@ -61,6 +62,7 @@ static void gui_task(void *arg)
       }
    }
 }
+
 void app_main(void)
 {
 

@@ -170,6 +170,13 @@ bool lvgl_spi_driver_init(int host,
     };
 
     dma_chan = dma_channel;
+#elif defined (CONFIG_IDF_TARGET_ESP32S3)
+    assert((SPI1_HOST <= host) && (SPI3_HOST >= host));
+    const char *spi_names[] = {
+        "SPI1_HOST", "SPI2_HOST", "SPI3_HOST"
+    };
+
+    dma_chan = 3 /* SPI_DMA_CH_AUTO */;
 #elif defined (CONFIG_IDF_TARGET_ESP32C3)
     assert((SPI1_HOST <= host) && (SPI3_HOST >= host));
     const char *spi_names[] = {
