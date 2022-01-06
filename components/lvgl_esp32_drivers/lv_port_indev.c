@@ -298,6 +298,7 @@ static void keypad_init(void)
 static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     static uint32_t last_key = 0;
+    static lv_indev_state_t last_status = LV_INDEV_STATE_PR;
 
     /*Get the current x and y coordinates*/
     //mouse_get_xy(&data->point.x, &data->point.y);
@@ -327,11 +328,17 @@ static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
         }
 
         last_key = act_key;
+
+        if(last_status == LV_INDEV_STATE_REL){
+            ESP_LOGI("LV_INDEV","BUTTON PREESED! KEY: %d", act_key);
+        }
+        
     } else {
         data->state = LV_INDEV_STATE_REL;
     }
 
     data->key = last_key;
+    last_status = data->state;
 }
 
 /*Get the currently being pressed key.  0 if no key is pressed*/
