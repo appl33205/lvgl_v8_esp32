@@ -15,6 +15,7 @@
 #include "lv_examples/src/lv_demo_music/lv_demo_music.h"
 #include "lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.h"
 #include "lvgl_helpers.h"
+#include "lv_port_indev.h"
 #include "esp_freertos_hooks.h"
 
 #define DLV_HOR_RES_MAX 240
@@ -35,10 +36,10 @@ static void gui_task(void *arg)
 
    /* Example for 1) */
    static lv_disp_draw_buf_t draw_buf;
-   lv_color_t *buf1 = heap_caps_malloc(DLV_HOR_RES_MAX * 60, MALLOC_CAP_DMA);
-   lv_color_t *buf2 = heap_caps_malloc(DLV_HOR_RES_MAX * 60, MALLOC_CAP_DMA);
+   lv_color_t *buf1 = heap_caps_malloc(DLV_HOR_RES_MAX * DLV_VER_RES_MAX / 4, MALLOC_CAP_DMA);
+   lv_color_t *buf2 = heap_caps_malloc(DLV_HOR_RES_MAX * DLV_VER_RES_MAX / 4, MALLOC_CAP_DMA);
 
-   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, DLV_HOR_RES_MAX * 30); /*Initialize the display buffer*/
+   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, DLV_HOR_RES_MAX * DLV_VER_RES_MAX / 8); /*Initialize the display buffer*/
 
    static lv_disp_drv_t disp_drv;         /*A variable to hold the drivers. Must be static or global.*/
    lv_disp_drv_init(&disp_drv);           /*Basic initialization*/
@@ -50,9 +51,11 @@ static void gui_task(void *arg)
 
    esp_register_freertos_tick_hook(lv_tick_task);
    // lv_demo_widgets();
-    lv_demo_music();
+   // lv_demo_music();
    // lv_demo_benchmark();
 
+   lv_port_indev_init();
+   lv_demo_keypad_encoder();
 
    while (1)
    {
@@ -70,6 +73,5 @@ static void gui_task(void *arg)
 
 void app_main(void)
 {
-
    xTaskCreatePinnedToCore(gui_task, "gui task", 1024 * 4, NULL, 1, NULL, 0);
 }
