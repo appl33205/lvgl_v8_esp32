@@ -17,6 +17,9 @@
 #include "lvgl_helpers.h"
 #include "esp_freertos_hooks.h"
 
+#define DLV_HOR_RES_MAX 240
+#define DLV_VER_RES_MAX 240
+
 static void lv_tick_task(void *arg)
 {
    (void)arg;
@@ -32,10 +35,10 @@ static void gui_task(void *arg)
 
    /* Example for 1) */
    static lv_disp_draw_buf_t draw_buf;
-   lv_color_t *buf1 = heap_caps_malloc(DLV_HOR_RES_MAX * DLV_VER_RES_MAX * sizeof(lv_color_t), MALLOC_CAP_DMA);
-   lv_color_t *buf2 = heap_caps_malloc(DLV_HOR_RES_MAX * DLV_VER_RES_MAX * sizeof(lv_color_t), MALLOC_CAP_DMA);
+   lv_color_t *buf1 = heap_caps_malloc(DLV_HOR_RES_MAX * 60, MALLOC_CAP_DMA);
+   lv_color_t *buf2 = heap_caps_malloc(DLV_HOR_RES_MAX * 60, MALLOC_CAP_DMA);
 
-   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, DLV_HOR_RES_MAX * DLV_VER_RES_MAX); /*Initialize the display buffer*/
+   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, DLV_HOR_RES_MAX * 30); /*Initialize the display buffer*/
 
    static lv_disp_drv_t disp_drv;         /*A variable to hold the drivers. Must be static or global.*/
    lv_disp_drv_init(&disp_drv);           /*Basic initialization*/
@@ -47,8 +50,10 @@ static void gui_task(void *arg)
 
    esp_register_freertos_tick_hook(lv_tick_task);
    // lv_demo_widgets();
-   lv_demo_music();
+    lv_demo_music();
    // lv_demo_benchmark();
+
+
    while (1)
    {
       /* Delay 1 tick (assumes FreeRTOS tick is 10ms */
